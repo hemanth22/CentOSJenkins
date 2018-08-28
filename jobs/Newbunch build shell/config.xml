@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>This job will execute bunch of java programs using shell scripting</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <com.gitcolony.jenkins.gitcolony.UrlProperty plugin="gitcolony-plugin@1.1">
+      <url></url>
+    </com.gitcolony.jenkins.gitcolony.UrlProperty>
+    <org.jvnet.hudson.plugins.shelveproject.ShelveProjectProperty plugin="shelve-project-plugin@1.5"/>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>./javatest.sh &gt; javatest.log</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.tasks.Mailer plugin="mailer@1.20">
+      <recipients>hemanth@localhost.localdomain</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
+    <hudson.plugins.statusmonitor.MonitorPublisher plugin="statusmonitor@1.3"/>
+  </publishers>
+  <buildWrappers/>
+</project>

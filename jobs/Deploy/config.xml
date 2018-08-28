@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<flow-definition plugin="workflow-job@2.16">
+  <actions>
+    <io.jenkins.blueocean.service.embedded.BlueOceanUrlAction plugin="blueocean-rest-impl@1.3.4">
+      <blueOceanUrlObject class="io.jenkins.blueocean.service.embedded.BlueOceanUrlObjectImpl">
+        <mappedUrl>blue/organizations/jenkins/Deploy</mappedUrl>
+        <modelObject class="flow-definition" reference="../../../.."/>
+      </blueOceanUrlObject>
+    </io.jenkins.blueocean.service.embedded.BlueOceanUrlAction>
+  </actions>
+  <description>Fibonocci program using C plus plus and makefile</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <io.fabric8.jenkins.openshiftsync.BuildConfigProjectProperty plugin="openshift-sync@0.9.1">
+      <uid></uid>
+      <namespace></namespace>
+      <name></name>
+      <resourceVersion></resourceVersion>
+    </io.fabric8.jenkins.openshiftsync.BuildConfigProjectProperty>
+    <org.jenkinsci.plugins.gitlablogo.GitlabLogoProperty plugin="gitlab-logo@1.0.3">
+      <repositoryName></repositoryName>
+    </org.jenkinsci.plugins.gitlablogo.GitlabLogoProperty>
+    <com.suryagaddipati.jenkins.SlaveUtilizationProperty plugin="slave-utilization-plugin@1.8">
+      <needsExclusiveAccessToNode>false</needsExclusiveAccessToNode>
+      <singleInstancePerSlave>false</singleInstancePerSlave>
+      <slaveUtilizationPercentage>0</slaveUtilizationPercentage>
+    </com.suryagaddipati.jenkins.SlaveUtilizationProperty>
+  </properties>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.42">
+    <script>node {
+try{
+stage &apos;Downloading git repository&apos;
+git &apos;https://github.com/hemanth22/Fibonocci-CPP.git&apos;
+stage &apos;Approval Management&apos;
+input &apos;Approval for deployment&apos;
+stage &apos;Build and execute&apos;
+sh &apos;make&apos;
+stage &apos;Complete result file&apos;
+sh &apos;./Out &gt; Result.txt&apos;
+stage &apos;Cleaning Build file&apos;
+sh &apos;make clean&apos;
+stage &apos;Generate report&apos;
+publishHTML([allowMissing: true, alwaysLinkToLastBuild: false, keepAll: true, reportDir: &apos;*&apos;, reportFiles: &apos;index.html&apos;, reportName: &apos;HTML Report&apos;, reportTitles: &apos;Job report&apos;])
+stage &apos;Archive&apos;
+archive &apos;*&apos;
+notify(&apos;Success&apos;)
+}catch(err){
+  notify(&quot;Error ${err}&quot;)
+  currentBuild.result = &apos;FAILURE&apos;
+}
+}
+
+def notify(status){
+    emailext (
+      to: &quot;hemanth@localhost.localdomain&quot;,
+      subject: &quot;${status}: Job &apos;${env.JOB_NAME} [${env.BUILD_NUMBER}]&apos;&quot;,
+      body: &quot;&quot;&quot;&lt;p&gt;${status}: Job &apos;${env.JOB_NAME} [${env.BUILD_NUMBER}]&apos;:&lt;/p&gt;
+        &lt;p&gt;Check console output at &lt;a href=&apos;${env.BUILD_URL}&apos;&gt;${env.JOB_NAME} [${env.BUILD_NUMBER}]&lt;/a&gt;&lt;/p&gt;&quot;&quot;&quot;,
+    )
+}</script>
+    <sandbox>true</sandbox>
+  </definition>
+  <triggers/>
+  <disabled>false</disabled>
+</flow-definition>
