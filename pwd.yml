@@ -1,10 +1,7 @@
-version: '3.1'
+version: '3.2'
 
 services:
-
-  main:
-    image: bitroid/centosjenkins:${TAG:-latest}
-    privileged: true
-    ports:
-      - 8080:8080
-      - 50000:50000
+    jenkins:
+        image: centosjenkins_jenkins:latest
+        ports:
+            - "8080:80"
