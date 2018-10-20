@@ -18,6 +18,7 @@ jobs:
         - export container_id=$(date +%s)
         - export cleanup=false
         - docker-compose build
+        - docker images
         - docker swarm init
         - docker stack deploy -c stacks.yml jenkins
         - sleep 90
