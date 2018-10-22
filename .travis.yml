@@ -20,10 +20,8 @@ jobs:
         - docker-compose build
         - docker images
         - docker swarm init
-        - docker stack deploy -c stacks.yml jenkins
+        - docker run -d --privileged -p 8080:8080 -p 50000:50000 centosjenkins_jenkins
         - sleep 90
-        - docker service ps jenkins_jenkins
-        - docker service ls
         - echo "Listing files"
         - ls -la
         - wget -O- localhost:8080
