@@ -28,6 +28,7 @@ jobs:
 
     - stage: deploy
       script:
+        - chmod 777 hub_docker.sh
         - ./hub_docker.sh
 
 after_failure:
