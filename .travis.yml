@@ -11,7 +11,7 @@ stages:
   - test
   - deploy
 
- jobs:
+jobs:
   include:
     - stage: test
       script:
