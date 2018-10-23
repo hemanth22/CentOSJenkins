@@ -6,6 +6,5 @@ RUN yum install -y jenkins java-1.8.0-openjdk
 #COPY jobs /var/lib/jenkins/jobs/
 #RUN wget -O http://0.0.0.0:8080/jnlpJars/jenkins-cli.jar
 #RUN java -jar jenkins-cli.jar -s http://localhost:8080 install-plugin github-api github-oauth email-ext webhook-step badge
-EXPOSE 8080
-EXPOSE 50000
+EXPOSE 8080 50000
 CMD ["/usr/sbin/init"]
