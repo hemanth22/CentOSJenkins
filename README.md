@@ -1,5 +1,5 @@
 # CentOSJenkins
-This is my custom build for jenkins in centos
+This is my custom build for jenkins in centos.
 
 
 Branch | Codacy | Travis CI
