@@ -1,4 +1,4 @@
-workflow "Build and Test time" {
+workflow "Build and Test" {
   on = "push"
   resolves = ["Test on Travis CI"]
 }
