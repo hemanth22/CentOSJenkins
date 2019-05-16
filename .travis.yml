@@ -20,7 +20,7 @@ jobs:
         - docker-compose build
         - docker images
         - docker run -d --privileged -p 8080:8080 centosjenkins_jenkins
-        - sleep 120
+        - sleep 90
         - docker ps -a -s
         - echo "Listing files"
         - ls -la
