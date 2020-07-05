@@ -25,5 +25,3 @@ useradd docker
 echo "Granting docker privilage to jenkins"
 usermod -a -G docker jenkins
 usermod -a -G dockerroot jenkins
-echo "Start Jenkins"
-CMD systemctl start nginx
