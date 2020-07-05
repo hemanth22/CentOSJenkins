@@ -5,7 +5,7 @@ yum install -y initscripts
 echo "Extra Packages for Enterprise Linux"
 yum install -y epel-release
 echo "Pre-requiste"
-yum install -y wget yum-presto openssl ant mlocate vim curl git gcc make gcc-c++ bash-completion-extras which
+yum install -y wget yum-presto openssl ant mlocate vim curl git gcc make gcc-c++ bash-completion-extras which tree
 yum install -y nginx fpaste ansible java-1.8.0-openjdk
 echo "Install playbook"
 ansible-galaxy install geerlingguy.nginx
@@ -25,3 +25,5 @@ useradd docker
 echo "Granting docker privilage to jenkins"
 usermod -a -G docker jenkins
 usermod -a -G dockerroot jenkins
+echo "Start Jenkins"
+CMD systemctl start nginx
